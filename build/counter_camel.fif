@@ -1,0 +1,273 @@
+"Asm.fif" include
+// automatically generated from `contracts/camelCase/counter.fc` incl:`contracts/camelCase/imports/stdlib.fc` incl:`contracts/camelCase/auto/scheme.fc` 
+PROGRAM{
+  DECLPROC calcBcAddress
+  DECLPROC calcMcAddress
+  DECLPROC ~setTokenSnakeMetadataEntry
+  DECLPROC createTokenOnchainMetadata
+  DECLPROC send
+  DECLPROC tlb::getSizeBySkip
+  DECLPROC tlb::skip
+  DECLPROC tlb::load
+  DECLPROC Data::skip
+  DECLPROC Data::get_size
+  DECLPROC Data::load
+  DECLPROC Data::_::skip
+  DECLPROC Data::_::parse
+  DECLPROC Data::_::store
+  DECLPROC InternalMsgBody::skip
+  DECLPROC InternalMsgBody::get_size
+  DECLPROC InternalMsgBody::load
+  DECLPROC InternalMsgBody::increase::skip
+  DECLPROC InternalMsgBody::increase::parse
+  DECLPROC InternalMsgBody::increase::store
+  DECLPROC loadData
+  DECLPROC saveData
+  DECLPROC receiveInternalMessage
+  127487 DECLMETHOD getCounter
+  117305 DECLMETHOD getId
+  DECLGLOBVAR ctxId
+  DECLGLOBVAR ctxCounter
+  calcBcAddress PROCINLINE:<{
+    //  stateInit
+    HASHCU	//  _1
+    NEWC x{801_} STSLICECONST 256 STU ENDC CTOS	//  _3
+  }>
+  calcMcAddress PROCINLINE:<{
+    //  stateInit
+    HASHCU	//  _1
+    NEWC x{9FF_} STSLICECONST 256 STU ENDC CTOS	//  _3
+  }>
+  ~setTokenSnakeMetadataEntry PROC:<{
+    //  contentDict key value
+    NEWC	//  contentDict key value _5
+    x{00} STSLICECONST	//  contentDict key value _6
+    STSLICE	//  contentDict key _7
+    ENDC	//  contentDict key _8
+    s0 s2 XCHG
+    8 PUSHPOW2	//  _8 key contentDict _9=256
+    DICTUSETREF	//  contentDict
+  }>
+  createTokenOnchainMetadata PROCINLINE:<{
+    //  contentDict
+    NEWC	//  contentDict _2
+    x{00} STSLICECONST	//  contentDict _3
+    STDICT	//  _4
+    ENDC	//  _5
+  }>
+  send PROCINLINE:<{
+    //  address value stateInit body mode
+    NEWC	//  address value stateInit body mode _7
+    x{62_} STSLICECONST	//  address value stateInit body mode _8
+    s1 s5 XCHG	//  mode value stateInit body address _8
+    STSLICE	//  mode value stateInit body _9
+    s0 s3 XCHG2	//  mode body stateInit _9 value
+    STGRAMS	//  mode body stateInit _10
+    105 PUSHINT	//  mode body stateInit _10 _11=105
+    STZEROES	//  mode body stateInit message
+    OVER	//  mode body stateInit message stateInit
+    ISNULL	//  mode body stateInit message _13
+    IF:<{	//  mode body stateInit message
+      NIP	//  mode body message
+      STZERO	//  mode body message
+    }>ELSE<{	//  mode body stateInit message
+      x{A_} STSLICECONST	//  mode body stateInit _15
+      STB	//  mode body message
+    }>
+    OVER	//  mode body message body
+    ISNULL	//  mode body message _18
+    IF:<{	//  mode body message
+      NIP	//  mode message
+      STZERO	//  mode message
+    }>ELSE<{	//  mode body message
+      DUP	//  mode body message message
+      BREMBITREFS	//  mode body message b1 r1
+      s3 PUSH	//  mode body message b1 r1 body
+      BBITREFS	//  mode body message b1 r1 b2 r2
+      s3 s3 XCHG2	//  mode body message r2 r1 b1 b2
+      GEQ	//  mode body message r2 r1 _25
+      s0 s2 XCHG	//  mode body message _25 r1 r2
+      GEQ	//  mode body message _25 _26
+      AND	//  mode body message _27
+      IF:<{	//  mode body message
+        STZERO	//  mode body _28
+        STB	//  mode message
+      }>ELSE<{	//  mode body message
+        STONE	//  mode body _30
+        STBREF	//  mode message
+      }>
+    }>
+    ENDC	//  mode _33
+    SWAP	//  _33 mode
+    SENDRAWMSG
+  }>
+  tlb::getSizeBySkip PROCINLINE:<{
+    //  cs skip
+    OVER	//  cs skip cs
+    SBITREFS	//  cs skip beforeBits beforeRefs
+    2SWAP	//  beforeBits beforeRefs cs skip
+    1 1 CALLXARGS	//  beforeBits beforeRefs newSlice
+    SBITREFS	//  beforeBits beforeRefs afterBits afterRefs
+    s3 s3 XCHG2	//  afterRefs beforeRefs beforeBits afterBits
+    SUB	//  afterRefs beforeRefs _10
+    s0 s2 XCHG	//  _10 beforeRefs afterRefs
+    SUB	//  _10 _11
+  }>
+  tlb::skip PROCINLINE:<{
+    //  cs getSize
+    s1 s(-1) PUXC	//  cs cs getSize
+    1 2 CALLXARGS	//  cs bits refs
+    SPLIT	//  _10 _9
+    NIP	//  cs
+  }>
+  tlb::load PROCINLINE:<{
+    //  cs getSize
+    s1 s(-1) PUXC	//  cs cs getSize
+    1 2 CALLXARGS	//  cs bits refs
+    SPLIT	//  _9 _8
+    SWAP	//  _8 _9
+  }>
+  Data::skip PROCINLINE:<{
+    //  cs
+    x{} SDBEGINSQ	//  cs _1
+    IF:<{	//  cs
+      Data::_::skip INLINECALLDICT	//  _4
+    }>ELSE<{	//  cs
+    }>
+  }>
+  Data::get_size PROCINLINE:<{
+    //  cs
+    DROP	// 
+    64 PUSHINT	//  _1=64
+    0 PUSHINT	//  _1=64 _2=0
+  }>
+  Data::load PROCINLINE:<{
+    //  cs
+    CONT:<{
+      Data::get_size CALLDICT
+    }>	//  cs _1
+    tlb::load INLINECALLDICT	//  _3 _4
+  }>
+  Data::_::skip PROCINLINE:<{
+    //  cs
+    64 PUSHINT	//  cs _2=64
+    SDSKIPFIRST	//  cs
+  }>
+  Data::_::parse PROCINLINE:<{
+    //  cs
+    32 LDU	//  id cs
+    32 LDU	//  id counter cs
+    -ROT	//  cs id counter
+    PAIR	//  cs _9
+  }>
+  Data::_::store PROCINLINE:<{
+    //  cb data
+    UNPAIR	//  cb id counter
+    s0 s2 XCHG	//  counter id cb
+    32 STU	//  counter cb
+    32 STU	//  cb
+  }>
+  InternalMsgBody::skip PROCINLINE:<{
+    //  cs
+    x{7e8764ef} SDBEGINSQ	//  cs _1
+    IF:<{	//  cs
+      InternalMsgBody::increase::skip INLINECALLDICT	//  _4
+    }>ELSE<{	//  cs
+    }>
+  }>
+  InternalMsgBody::get_size PROCINLINE:<{
+    //  cs
+    DROP	// 
+    7 PUSHPOW2	//  _1=128
+    0 PUSHINT	//  _1=128 _2=0
+  }>
+  InternalMsgBody::load PROCINLINE:<{
+    //  cs
+    CONT:<{
+      InternalMsgBody::get_size CALLDICT
+    }>	//  cs _1
+    tlb::load INLINECALLDICT	//  _3 _4
+  }>
+  InternalMsgBody::increase::skip PROCINLINE:<{
+    //  cs
+    96 PUSHINT	//  cs _2=96
+    SDSKIPFIRST	//  cs
+  }>
+  InternalMsgBody::increase::parse PROCINLINE:<{
+    //  cs
+    64 LDU	//  queryId cs
+    32 LDU	//  queryId increaseBy cs
+    -ROT	//  cs queryId increaseBy
+    PAIR	//  cs _9
+  }>
+  InternalMsgBody::increase::store PROCINLINE:<{
+    //  cb data
+    UNPAIR	//  cb queryId increaseBy
+    s0 s2 XCHG	//  increaseBy queryId cb
+    64 STU	//  increaseBy cb
+    32 STU	//  cb
+  }>
+  loadData PROCINLINE:<{
+    // 
+    c4 PUSH	//  _1
+    CTOS	//  ds
+    Data::_::parse INLINECALLDICT	//  _8 _9
+    NIP	//  _3
+    UNPAIR	//  _6 _7
+    SWAP	//  _7 _6
+    ctxId SETGLOB
+    ctxCounter SETGLOB
+  }>
+  saveData PROCINLINE:<{
+    // 
+    NEWC	//  _0
+    ctxId GETGLOB	//  _0 _2
+    ctxCounter GETGLOB	//  _0 _2 _3
+    PAIR	//  _0 _1
+    Data::_::store INLINECALLDICT	//  _4
+    ENDC	//  _5
+    c4 POP
+  }>
+  receiveInternalMessage PROC:<{
+    //  inMsgFull inMsgBody
+    DUP	//  inMsgFull inMsgBody inMsgBody
+    SEMPTY	//  inMsgFull inMsgBody _2
+    IFJMP:<{	//  inMsgFull inMsgBody
+      2DROP	// 
+    }>	//  inMsgFull inMsgBody
+    SWAP	//  inMsgBody inMsgFull
+    CTOS	//  inMsgBody cs
+    4 LDU	//  inMsgBody _25 _24
+    DROP	//  inMsgBody flags
+    ONE AND	//  inMsgBody _8
+    IFJMP:<{	//  inMsgBody
+      DROP	// 
+    }>	//  inMsgBody
+    loadData INLINECALLDICT
+    x{7e8764ef} SDBEGINSQ	//  inMsgBody _10
+    IFJMP:<{	//  inMsgBody
+      InternalMsgBody::increase::parse INLINECALLDICT	//  _28 _29
+      NIP	//  _15
+      UNPAIR	//  _30 _31
+      NIP	//  increaseBy
+      ctxCounter GETGLOB	//  increaseBy _18
+      SWAP	//  _18 increaseBy
+      ADD	//  _20
+      ctxCounter SETGLOB
+      saveData INLINECALLDICT
+    }>	//  inMsgBody
+    DROP	// 
+    16 PUSHPOW2DEC	//  _22=65535
+    THROWANY
+  }>
+  getCounter PROC:<{
+    // 
+    loadData INLINECALLDICT
+    ctxCounter GETGLOB	//  _1
+  }>
+  getId PROC:<{
+    // 
+    loadData INLINECALLDICT
+    ctxId GETGLOB	//  _1
+  }>
+}END>c

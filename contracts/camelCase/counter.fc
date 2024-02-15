@@ -1,0 +1,58 @@
+#include "imports/stdlib.fc";
+#include "auto/scheme.fc";
+
+// storage variables
+
+// id is required to be able to create different instances of counters
+// since addresses in TON depend on the initial state of the contract
+global int ctxId;
+global int ctxCounter;
+
+// load_data populates storage variables using stored data
+() loadData() impure inline {
+    slice ds = getData().beginParse();
+    [ctxId, ctxCounter] = ds~Data::_::parse();
+}
+
+// save_data stores storage variables as a cell into persistent storage
+() saveData() impure inline {
+    setData(Data::_::store(beginCell(), [ctxId, ctxCounter]).endCell());
+}
+
+// recv_internal is the main function of the contract and is called when it receives a message from other contracts
+() receiveInternalMessage(cell inMsgFull, slice inMsgBody) impure {
+    if (inMsgBody.isSliceEmpty()) { // ignore all empty messages
+        return ();
+    }
+
+    slice cs = inMsgFull.beginParse();
+    int flags = cs~loadMsgFlags();
+    if (flags.isBounced()) { // ignore all bounced messages
+        return ();
+    }
+
+    loadData(); // here we populate the storage variables
+
+    if (inMsgBody~isSliceBeginsWith(op::increase)) {
+        [int queryId, int increaseBy] = inMsgBody~InternalMsgBody::increase::parse();
+        ctxCounter += increaseBy;
+        saveData();
+        return ();
+    }
+
+    throw(0xffff); // if the message contains an op that is not known to this contract, we throw
+}
+
+// get methods are a means to conveniently read contract data using, for example, HTTP APIs
+// they are marked with method_id
+// note that unlike in many other smart contract VMs, get methods cannot be called by other contracts
+
+int getCounter() methodId {
+    loadData();
+    return ctxCounter;
+}
+
+int getId() methodId {
+    loadData();
+    return ctxId;
+}

@@ -1,0 +1,4 @@
+
+_ id:uint32 counter:uint32 = Data;
+
+increase#7e8764ef query_id:uint64 increase_by:uint32 = InternalMsgBody;
